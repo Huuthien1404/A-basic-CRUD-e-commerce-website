@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://localhost:3000/grid.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header__inner {
+            flex-wrap: nowrap;
+        }
+
+        .header {
+            background-color: black;
+        }
+
+        .header__title {
+            font-size: 2.4rem;
+            color: white;
+            height: 7rem;
+            line-height: 7rem;
+
+        }
+
+        .header__title span {
+            user-select: none;
+        }
+
+        .header__menu {
+            height: 7rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative;
+        }
+
+        .search__form {
+            display: flex;
+            justify-content: space-between;
+            width: 40rem;
+        }
+
+        .search__input {
+            width: 75%;
+            height: 5rem;
+            font-size: 1.6rem;
+            padding: 1rem;
+            outline: none;
+            margin-right: 1rem;
+            border: 0;
+            color: black;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .search__submit {
+            width: 24%;
+            height: 5rem;
+            outline: none;
+            border: 0;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid white;
+            background-color: black;
+        }
+
+        .search__submit:hover {
+            border: 0;
+            background-color: white;
+            color: black;
+        }
+
+        .header__menu p {
+            color: #9a9da0;
+            font-size: 2rem;
+            transition: 0.25s linear;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .header__menu p:hover {
+            color: white;
+        }
+
+        .card__item {
+            background-color: aquamarine;
+            height: 35rem;
+            margin-top: 2rem;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            background-color: #f6f6f6;
+            transition: 0.25s linear;
+        }
+
+        .card__item:hover {
+            background-color: black;
+            color: white;
+        }
+
+
+        .pagination {
+            width: 25rem;
+            height: 4rem;
+            display: flex;
+            margin: 2.5rem auto;
+            color: #0d6efd;
+            font-size: 1.6rem;
+            position: relative;
+        }
+
+        .page__button {
+            width: 14%;
+            height: 100%;
+            border: 1px solid #dee2e6;
+            text-align: center;
+            line-height: 4rem;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.25s linear;
+        }
+        .prev__button-view,
+        .next__button-view,
+        .next__button,
+        .prev__button {
+            flex-grow: 1;
+            height: 100%;
+            border: 1px solid #dee2e6;
+            text-align: center;
+            line-height: 4rem;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.25s linear;
+        }
+        .prev__button-view:hover,
+        .next__button-view:hover,
+        .prev__button:hover,
+        .next__button:hover,
+        .page__button:hover {
+            background-color: #e9ecef;
+            color: #0a58ca;
+        }
+
+        .footer__title {
+            height: 7rem;
+            color: white;
+            line-height: 7rem;
+            font-size: 2.4rem;
+        }
+
+        .footer {
+            background-color: black;
+            user-select: none;
+        }
+
+        .footer__contact {
+            height: 7rem;
+            display: flex;
+            font-size: 2.4rem;
+            align-items: center;
+            justify-content: flex-end;
+            color: #9a9da0;
+        }
+
+        .footer__contact i {
+            margin: 0 1rem;
+
+        }
+
+        .footer__contact i:hover {
+            color: white;
+        }
+
+        .card__item-img {
+            width: 100%;
+            height: 28rem;
+        }
+
+        .card__item-img img {
+            width: 100%;
+            height: 28rem;
+            padding: 0.1rem;
+        }
+
+        .card__item-content {
+            flex-grow: 1;
+            font-size: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .container__list {
+            min-height: 74rem;
+        }
+        .type__product,
+        .total__page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            user-select: none;
+            pointer-events: none;
+        }
+        .form__get-list-item-page-third_view,
+        .form__get-list-item-page-second_view,
+        .form__get-list-item-page-first_view,
+        .form__get-list-item-page-third,
+        .form__get-list-item-page-second,
+        .form__get-list-item-page-first {
+            user-select: none;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .list__option {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .list__option p {
+            margin: 1rem;
+        }
+
+        .grid__container-list {
+            position: relative;
+            z-index: 0;
+            
+        }
+        .container__form-fix,
+        .container__form-delete,
+        .container__form-add {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: none;
+        }
+        .form__update-product,
+        .form__fix-product,
+        .form__delete-product,
+        .form__add-product {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(-50%);
+            width: 30%;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-bottom: 2rem;
+            border: 1px solid black;
+        }
+
+        .input__add-product {
+            margin-top: 1rem;
+            height: 4rem;
+            padding: 1rem;
+            color: black;
+            font-size: 2rem;
+            outline: none;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+        .input__CatID-fix-product,
+        .input__CatID-add-product {
+            padding: 0;
+            padding-left: 1rem;
+        }
+        .input__LinkImg-fix-product,
+        .input__LinkImg-add-product {
+            padding: 0;
+            padding-left: 1rem;
+            line-height: 4rem;
+            margin-bottom: 2rem;
+        }
+        .input__ProName-fix-product,
+        .input__ProName-add-product {
+            margin-top: 2rem;
+        }
+        .input__Price-fix-product,
+        .input__Price-add-product {
+            margin-top: 3rem;
+        }
+        .input__Quantity-fix-product,
+        .input__Quantity-add-product {
+            margin-top: 3rem;
+        }
+        .error__quantity1,
+        .error__price1,
+        .error__tinyDes1,
+        .error__proName1,
+        .error__quantity,
+        .error__price,
+        .error__tinyDes,
+        .error__proName {
+            margin-top: 1rem;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .notification_from_sever{
+            position: absolute;
+            top: 0;
+            left: 0;
+            user-select: none;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .selectToFix,
+        .selectToDelete{
+            padding: 0;
+            padding-left: 1rem;
+        }
+        .container__view{
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 20rem;
+            height: 24rem;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.25s linear;
+        }
+        .view__item{
+            flex-grow: 1;
+            border: 1px solid white;
+            background-color: black;
+            color: white;
+            text-align: center;
+            line-height: 3rem;
+            font-size: 1.6rem;
+            transition: 0.25s linear;
+        }
+        .view__item:hover{
+            background-color: gray;
+            cursor: pointer;
+            user-select: none;
+        }
+        .form__view-product{
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0;
+            visibility: hidden;
+        }
+        @media (max-width: 740px){
+            .form__update-product,
+            .form__fix-product,
+            .form__delete-product,
+            .form__add-product{
+                width: 90%;
+            }
+        }
+        @media (min-width: 740px) and (max-width: 1024px){
+            .form__update-product,
+            .form__fix-product,
+            .form__delete-product,
+            .form__add-product{
+                width: 57%;
+            }
+        }
+        @media (min-width: 1024px) and (max-width: 1380px) {
+            .form__update-product,
+            .form__fix-product,
+            .form__delete-product,
+            .form__add-product{
+                width: 43%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid header">
+        <div class="grid wide">
+            <div class="row">
+                <div class="col l-1 m-0 c-0 header__title">
+                    <span class="span">Navbar</span>
+                </div>
+                <div class="col l-11 m-12 c-12">
+                    <div class="header__menu">
+                        <div class="list__option">
+                            <p class="add" onclick="handle_click_add_button()">Thêm</p>
+                            <p class="delete" onclick="handle_click_delete_button()">Xoá</p>
+                            <p class="fix" onclick="handle_click_fix_button()">Sửa</p>
+                            <p class="view" onclick="handle_click_view_button()">Xem sản phẩm</p>
+                        </div>
+                        <div class="container__view">
+                            <div class="view__item view__book" onclick="handle_click_view_book()">Sách</div>
+                            <div class="view__item view__phone" onclick="handle_click_view_phone()">Điện thoại</div>
+                            <div class="view__item view__camera" onclick="handle_click_view_camera()">Máy chụp hình</div>
+                            <div class="view__item view__fashion" onclick="handle_click_view_fashion()">Quần áo - giày dép</div>
+                            <div class="view__item view__computer" onclick="handle_click_view_computer()">Máy tính</div>
+                            <div class="view__item view__jewelry" onclick="handle_click_view_jewelry()">Đồ trang sức</div>
+                            <div class="view__item view__another" onclick="handle_click_view_another()">Khác</div>
+                            <div class="view__item view__all" onclick="handle_click_view_all()">Xem tất cả</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{{body}}}
+    <div class="grid footer">
+        <div class="grid wide">
+            <div class="row">
+                <div class="col l-1 m-1 c-1">
+                    <div class="footer__title">
+                        Footer
+                    </div>
+                </div>
+                <div class="col l-11 m-11 c-11">
+                    <div class="footer__contact">
+                        <i class="fa-brands fa-facebook"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function handle_click_page_first() {
+        if (document.querySelector('.page__first')!=null){
+            document.querySelector('.page__first').style.backgroundColor = '#007bff';
+            document.querySelector('.page__first').style.color = 'white';
+        }
+        if (document.querySelector('.page__second')!=null){
+            document.querySelector('.page__second').style.backgroundColor = 'white';
+            document.querySelector('.page__second').style.color = '#0d6efd';
+        }
+        if (document.querySelector('.page__third')!=null){
+            document.querySelector('.page__third').style.backgroundColor = 'white';
+            document.querySelector('.page__third').style.color = '#0d6efd';
+        }
+        document.querySelector('.list__item-page-first').value = document.querySelector('.page__first').innerHTML;
+        document.querySelector('.form__get-list-item-page-first').submit();
+    }
+    function handle_click_page_first_view() {
+        if (document.querySelector('.page__first-view')!=null){
+            document.querySelector('.page__first-view').style.backgroundColor = '#007bff';
+            document.querySelector('.page__first-view').style.color = 'white';
+        }
+        if (document.querySelector('.page__second-view')!=null){
+            document.querySelector('.page__second-view').style.backgroundColor = 'white';
+            document.querySelector('.page__second-view').style.color = '#0d6efd';
+        }
+        if (document.querySelector('.page__third-view')!=null){
+            document.querySelector('.page__third-view').style.backgroundColor = 'white';
+            document.querySelector('.page__third-view').style.color = '#0d6efd';
+        }
+        document.querySelector('.list__item-page-first-view').value = document.querySelector('.page__first-view').innerHTML;
+        document.querySelector('.type_product_view').value=document.querySelector('.type__product').innerHTML;
+        document.querySelector('.form__get-list-item-page-first_view').submit();
+    }
+    function handle_mouse_move_page_first() {
+        if (document.querySelector('.page__first').style.backgroundColor != '#007bff' && document.querySelector('.page__first').style.color != 'white') {
+            document.querySelector('.page__first').style.backgroundColor = '#e9ecef';
+            document.querySelector('.page__first').style.color = '#0a58ca';
+        }
+    }
+    function handle_mouse_move_page_first_view() {
+        if (document.querySelector('.page__first-view').style.backgroundColor != '#007bff' && document.querySelector('.page__first-view').style.color != 'white') {
+            document.querySelector('.page__first-view').style.backgroundColor = '#e9ecef';
+            document.querySelector('.page__first-view').style.color = '#0a58ca';
+        }
+    }
+    function handle_mouse_leave_page_first() {
+        if (document.querySelector('.page__first').style.backgroundColor != '#007bff' && document.querySelector('.page__first').style.color != 'white') {
+            document.querySelector('.page__first').style.backgroundColor = 'white';
+            document.querySelector('.page__first').style.color = '#0d6efd';
+        }
+    }
+    function handle_mouse_leave_page_first_view() {
+        if (document.querySelector('.page__first-view').style.backgroundColor != '#007bff' && document.querySelector('.page__first-view').style.color != 'white') {
+            document.querySelector('.page__first-view').style.backgroundColor = 'white';
+            document.querySelector('.page__first-view').style.color = '#0d6efd';
+        }
+    }
+    function handle_click_page_second() {
+        if (document.querySelector('.page__second')!=null){
+            document.querySelector('.page__second').style.backgroundColor = '#007bff';
+            document.querySelector('.page__second').style.color = 'white';
+        }
+        if (document.querySelector('.page__first')!=null){
+            document.querySelector('.page__first').style.backgroundColor = 'white';
+            document.querySelector('.page__first').style.color = '#0d6efd';
+        }
+        if (document.querySelector('.page__third')!=null){
+            document.querySelector('.page__third').style.backgroundColor = 'white';
+            document.querySelector('.page__third').style.color = '#0d6efd';
+        }
+        document.querySelector('.list__item-page-second').value = document.querySelector('.page__second').innerHTML;
+        document.querySelector('.form__get-list-item-page-second').submit();
+    }
+    function handle_click_page_second_view() {
+        if (document.querySelector('.page__second-view')!=null){
+            document.querySelector('.page__second-view').style.backgroundColor = '#007bff';
+            document.querySelector('.page__second-view').style.color = 'white';
+        }
+        if (document.querySelector('.page__second-view')!=null){
+            document.querySelector('.page__second-view').style.backgroundColor = 'white';
+            document.querySelector('.page__second-view').style.color = '#0d6efd';
+        }
+        if (document.querySelector('.page__third-view')!=null){
+            document.querySelector('.page__third-view').style.backgroundColor = 'white';
+            document.querySelector('.page__third-view').style.color = '#0d6efd';
+        }
+        document.querySelector('.list__item-page-second-view').value = document.querySelector('.page__second-view').innerHTML;
+        document.querySelector('.type_product_view_2').value=document.querySelector('.type__product').innerHTML;
+        document.querySelector('.form__get-list-item-page-second_view').submit();
+    }
+    function handle_mouse_move_page_second() {
+        if (document.querySelector('.page__second').style.backgroundColor != '#007bff' && document.querySelector('.page__second').style.color != 'white') {
+            document.querySelector('.page__second').style.backgroundColor = '#e9ecef';
+            document.querySelector('.page__second').style.color = '#0a58ca';
+        }
+    }
+    function handle_mouse_move_page_second_view() {
+        if (document.querySelector('.page__second-view').style.backgroundColor != '#007bff' && document.querySelector('.page__second-view').style.color != 'white') {
+            document.querySelector('.page__second-view').style.backgroundColor = '#e9ecef';
+            document.querySelector('.page__second-view').style.color = '#0a58ca';
+        }
+    }
+    function handle_mouse_leave_page_second() {
+        if (document.querySelector('.page__second').style.backgroundColor != '#007bff' && document.querySelector('.page__second').style.color != 'white') {
+            document.querySelector('.page__second').style.backgroundColor = 'white';
+            document.querySelector('.page__second').style.color = '#0d6efd';
+        }
+    }
+    function handle_mouse_leave_page_second_view() {
+        if (document.querySelector('.page__second-view').style.backgroundColor != '#007bff' && document.querySelector('.page__second-view').style.color != 'white') {
+            document.querySelector('.page__second-view').style.backgroundColor = 'white';
+            document.querySelector('.page__second-view').style.color = '#0d6efd';
+        }
+    }
+    function handle_click_page_third() {
+        if (document.querySelector('.page__third')!=null){
+            document.querySelector('.page__third').style.backgroundColor = '#007bff';
+            document.querySelector('.page__third').style.color = 'white';
+        }
+        if (document.querySelector('.page__second')!=null){
+            document.querySelector('.page__second').style.backgroundColor = 'white';
+            document.querySelector('.page__second').style.color = '#0d6efd';
+        }
+        if (document.querySelector('.page__first')!=null){
+            document.querySelector('.page__first').style.backgroundColor = 'white';
+            document.querySelector('.page__first').style.color = '#0d6efd';
+        }
+        document.querySelector('.list__item-page-third').value = document.querySelector('.page__third').innerHTML;
+        document.querySelector('.form__get-list-item-page-third').submit();
+    }
+    function handle_click_page_third_view() {
+        if (document.querySelector('.page__third-view')!=null){
+            document.querySelector('.page__third-view').style.backgroundColor = '#007bff';
+            document.querySelector('.page__third-view').style.color = 'white';
+        }
+        if (document.querySelector('.page__second-view')!=null){
+            document.querySelector('.page__second-view').style.backgroundColor = 'white';
+            document.querySelector('.page__second-view').style.color = '#0d6efd';
+        }
+        if (document.querySelector('.page__third-view')!=null){
+            document.querySelector('.page__third-view').style.backgroundColor = 'white';
+            document.querySelector('.page__third-view').style.color = '#0d6efd';
+        }
+        document.querySelector('.list__item-page-third-view').value = document.querySelector('.page__third-view').innerHTML;
+        document.querySelector('.type_product_view_3').value=document.querySelector('.type__product').innerHTML;
+        document.querySelector('.form__get-list-item-page-third_view').submit();
+    }
+    function handle_mouse_move_page_third() {
+        if (document.querySelector('.page__third').style.backgroundColor != '#007bff' && document.querySelector('.page__third').style.color != 'white') {
+            document.querySelector('.page__third').style.backgroundColor = '#e9ecef';
+            document.querySelector('.page__third').style.color = '#0a58ca';
+        }
+    }
+    function handle_mouse_move_page_third_view() {
+        if (document.querySelector('.page__third-view').style.backgroundColor != '#007bff' && document.querySelector('.page__third-view').style.color != 'white') {
+            document.querySelector('.page__third-view').style.backgroundColor = '#e9ecef';
+            document.querySelector('.page__third-view').style.color = '#0a58ca';
+        }
+    }
+    function handle_mouse_leave_page_third() {
+        if (document.querySelector('.page__third').style.backgroundColor != '#007bff' && document.querySelector('.page__third').style.color != 'white') {
+            document.querySelector('.page__third').style.backgroundColor = 'white';
+            document.querySelector('.page__third').style.color = '#0d6efd';
+        }
+    }
+    function handle_mouse_leave_page_third_view() {
+        if (document.querySelector('.page__third-view').style.backgroundColor != '#007bff' && document.querySelector('.page__third-view').style.color != 'white') {
+            document.querySelector('.page__third-view').style.backgroundColor = 'white';
+            document.querySelector('.page__third-view').style.color = '#0d6efd';
+        }
+    }
+    function handle_click_page_next() {
+        var totalPage = Number(document.querySelector('.total__page').innerHTML);
+        var maxPagePresent = Number(document.querySelector('.page__third').innerHTML);
+        if (maxPagePresent < totalPage) {
+            document.querySelector('.page__first').innerHTML = `${Number(document.querySelector('.page__first').innerHTML) + 1}`;
+            document.querySelector('.page__second').innerHTML = `${Number(document.querySelector('.page__second').innerHTML) + 1}`;
+            document.querySelector('.page__third').innerHTML = `${Number(document.querySelector('.page__third').innerHTML) + 1}`;
+            document.querySelector('.page__first').style.backgroundColor = '#007bff';
+            document.querySelector('.page__first').style.color = 'white';
+            document.querySelector('.page__second').style.backgroundColor = 'white';
+            document.querySelector('.page__second').style.color = '#0d6efd';
+            document.querySelector('.page__third').style.backgroundColor = 'white';
+            document.querySelector('.page__third').style.color = '#0d6efd';
+            document.querySelector('.list__item-page-first').value = document.querySelector('.page__first').innerHTML;
+            document.querySelector('.form__get-list-item-page-first').submit();
+        }
+    }
+    function handle_click_page_next_view() {
+        var totalPage = Number(document.querySelector('.total__page').innerHTML);
+        var maxPagePresent = Number(document.querySelector('.page__third-view').innerHTML);
+        if (maxPagePresent < totalPage) {
+            document.querySelector('.page__first-view').innerHTML = `${Number(document.querySelector('.page__first-view').innerHTML) + 1}`;
+            document.querySelector('.page__second-view').innerHTML = `${Number(document.querySelector('.page__second-view').innerHTML) + 1}`;
+            document.querySelector('.page__third-view').innerHTML = `${Number(document.querySelector('.page__third-view').innerHTML) + 1}`;
+            document.querySelector('.page__first-view').style.backgroundColor = '#007bff';
+            document.querySelector('.page__first-view').style.color = 'white';
+            document.querySelector('.page__second-view').style.backgroundColor = 'white';
+            document.querySelector('.page__second-view').style.color = '#0d6efd';
+            document.querySelector('.page__third-view').style.backgroundColor = 'white';
+            document.querySelector('.page__third-view').style.color = '#0d6efd';
+            document.querySelector('.list__item-page-first-view').value = document.querySelector('.page__first-view').innerHTML;
+            document.querySelector('.type_product_view').value=document.querySelector('.type__product').innerHTML;
+            document.querySelector('.form__get-list-item-page-first_view').submit();
+        }
+    }
+    function handle_click_page_prev() {
+        var minPagePresent = Number(document.querySelector('.page__first').innerHTML);
+        if (minPagePresent > 1) {
+            document.querySelector('.page__first').innerHTML = `${Number(document.querySelector('.page__first').innerHTML) - 1}`;
+            document.querySelector('.page__second').innerHTML = `${Number(document.querySelector('.page__second').innerHTML) - 1}`;
+            document.querySelector('.page__third').innerHTML = `${Number(document.querySelector('.page__third').innerHTML) - 1}`;
+            document.querySelector('.page__third').style.backgroundColor = '#007bff';
+            document.querySelector('.page__third').style.color = 'white';
+            document.querySelector('.page__second').style.backgroundColor = 'white';
+            document.querySelector('.page__second').style.color = '#0d6efd';
+            document.querySelector('.page__first').style.backgroundColor = 'white';
+            document.querySelector('.page__first').style.color = '#0d6efd';
+            document.querySelector('.list__item-page-third').value = document.querySelector('.page__third').innerHTML;
+            document.querySelector('.form__get-list-item-page-third').submit();
+        }
+    }
+    function handle_click_page_prev_view() {
+        var minPagePresent = Number(document.querySelector('.page__first-view').innerHTML);
+        if (minPagePresent > 1) {
+            document.querySelector('.page__first-view').innerHTML = `${Number(document.querySelector('.page__first-view').innerHTML) - 1}`;
+            document.querySelector('.page__second-view').innerHTML = `${Number(document.querySelector('.page__second-view').innerHTML) - 1}`;
+            document.querySelector('.page__third-view').innerHTML = `${Number(document.querySelector('.page__third-view').innerHTML) - 1}`;
+            document.querySelector('.page__third-view').style.backgroundColor = '#007bff';
+            document.querySelector('.page__third-view').style.color = 'white';
+            document.querySelector('.page__second-view').style.backgroundColor = 'white';
+            document.querySelector('.page__second-view').style.color = '#0d6efd';
+            document.querySelector('.page__first-view').style.backgroundColor = 'white';
+            document.querySelector('.page__first-view').style.color = '#0d6efd';
+            document.querySelector('.list__item-page-third-view').value = document.querySelector('.page__third-view').innerHTML;
+            document.querySelector('.type_product_view_3').value=document.querySelector('.type__product').innerHTML;
+            document.querySelector('.form__get-list-item-page-third_view').submit();
+        }
+    }
+    window.onload = function () {
+        if (document.querySelector('.page__first')!=null&&Number(document.querySelector('.page__first').innerHTML) == 1) {
+            if (document.querySelector('.prev__button')!=null){
+                document.querySelector('.prev__button').style.opacity = 0;
+                document.querySelector('.prev__button').style.visibility = 'hidden';
+            }
+        }
+        else if (document.querySelector('.page__third')!=null&&document.querySelector('.total__page')!=null&&Number(document.querySelector('.page__third').innerHTML) == Number(document.querySelector('.total__page').innerHTML)) {
+            if (document.querySelector('.next__button')!=null){
+                document.querySelector('.next__button').style.opacity = 0;
+                document.querySelector('.next__button').style.visibility = 'hidden';
+            }
+        }
+        else if (document.querySelector('.page__first')!=null&&Number(document.querySelector('.page__first').innerHTML)!=1&&document.querySelector('.page__third')!=null&&document.querySelector('.total__page')!=null&&Number(document.querySelector('.page__third').innerHTML) != Number(document.querySelector('.total__page').innerHTML)){
+            if (document.querySelector('.prev__button')!=null){
+                document.querySelector('.prev__button').style.opacity = 1;
+                document.querySelector('.prev__button').style.visibility = 'visible';
+            }
+            if (document.querySelector('.next__button')!=null){
+                document.querySelector('.next__button').style.opacity = 1;
+                document.querySelector('.next__button').style.visibility = 'visible';
+            }
+        }
+        if (document.querySelector('.page__first-view')!=null&&Number(document.querySelector('.page__first-view').innerHTML) == 1) {
+            if (document.querySelector('.prev__button-view')!=null){
+                document.querySelector('.prev__button-view').style.opacity = 0;
+                document.querySelector('.prev__button-view').style.visibility = 'hidden';
+            }
+        }
+        else if (document.querySelector('.page__third-view')!=null&&document.querySelector('.total__page')!=null&&Number(document.querySelector('.page__third-view').innerHTML) == Number(document.querySelector('.total__page').innerHTML)) {
+            if (document.querySelector('.next__button-view')!=null){
+                document.querySelector('.next__button-view').style.opacity = 0;
+                document.querySelector('.next__button-view').style.visibility = 'hidden';
+            }
+        }
+        else if (document.querySelector('.page__first-view')!=null&&Number(document.querySelector('.page__first-view').innerHTML)!=1&&document.querySelector('.page__third-view')!=null&&document.querySelector('.total__page')!=null&&Number(document.querySelector('.page__third-view').innerHTML) != Number(document.querySelector('.total__page').innerHTML)){
+            if (document.querySelector('.prev__button-view')!=null){
+                document.querySelector('.prev__button-view').style.opacity = 1;
+                document.querySelector('.prev__button-view').style.visibility = 'visible';
+            }
+            if (document.querySelector('.next__button-view')!=null){
+                document.querySelector('.next__button-view').style.opacity = 1;
+                document.querySelector('.next__button-view').style.visibility = 'visible';
+            }
+        }
+        if (document.querySelector('.notification_from_sever').innerHTML=='Thêm thất bại'){
+            alert('Thêm sản phẩm không thành công do tên sản phẩm đã tồn tại!');
+        }
+        if (document.querySelector('.notification_from_sever').innerHTML=='Thêm thành công'){
+            alert('Thêm sản phẩm thành công!');
+        }
+        if (document.querySelector('.notification_from_sever').innerHTML=='Xoá thành công'){
+            alert('Xoá sản phẩm thành công!');
+        }
+        if (document.querySelector('.notification_from_sever').innerHTML=='Cập nhật thành công'){
+            alert('Cập nhật thông tin cho sản phẩm thành công!');
+        }
+    }
+    function handle_click_add_button() {
+        document.querySelector('.add').style.color = 'white';
+        document.querySelector('.add').style.textDecoration = 'underline white solid 1px';
+        document.querySelector('.delete').style.color = '';
+        document.querySelector('.delete').style.textDecoration = '';
+        document.querySelector('.fix').style.color = '';
+        document.querySelector('.fix').style.textDecoration = '';
+        document.querySelector('.view').style.color = '';
+        document.querySelector('.view').style.textDecoration = '';
+        document.querySelector('.container__form-delete').style.display = 'none';
+        document.querySelector('.container__form-fix').style.display = 'none';
+        document.querySelector('.container__view').style.opacity=0;
+        document.querySelector('.container__view').style.visibility='hidden';
+        if (document.querySelector('.container__form-add').style.display == 'none' || document.querySelector('.container__form-add').style.display == '') {
+            document.querySelector('.container__form-add').style.display = 'block';
+        }
+        else {
+            document.querySelector('.container__form-add').style.display = 'none';
+            document.querySelector('.add').style.color = '';
+            document.querySelector('.add').style.textDecoration = '';
+        }
+    }
+    function handle_click_delete_button() {
+        document.querySelector('.delete').style.color = 'white';
+        document.querySelector('.delete').style.textDecoration = 'underline white solid 1px';
+        document.querySelector('.add').style.color = '';
+        document.querySelector('.add').style.textDecoration = '';
+        document.querySelector('.fix').style.color = '';
+        document.querySelector('.fix').style.textDecoration = '';
+        document.querySelector('.view').style.color = '';
+        document.querySelector('.view').style.textDecoration = '';
+        document.querySelector('.container__form-add').style.display = 'none';
+        document.querySelector('.container__form-fix').style.display = 'none';
+        document.querySelector('.container__view').style.opacity=0;
+        document.querySelector('.container__view').style.visibility='hidden';
+        if (document.querySelector('.container__form-delete').style.display == 'none' || document.querySelector('.container__form-delete').style.display == '') {
+            document.querySelector('.container__form-delete').style.display = 'block';
+        }
+        else {
+            document.querySelector('.container__form-delete').style.display = 'none';
+            document.querySelector('.delete').style.color = '';
+            document.querySelector('.delete').style.textDecoration = '';
+        }
+    }
+    function handle_click_fix_button() {
+        document.querySelector('.fix').style.color = 'white';
+        document.querySelector('.fix').style.textDecoration = 'underline white solid 1px';
+        document.querySelector('.add').style.color = '';
+        document.querySelector('.add').style.textDecoration = '';
+        document.querySelector('.delete').style.color = '';
+        document.querySelector('.delete').style.textDecoration = '';
+        document.querySelector('.view').style.color = '';
+        document.querySelector('.view').style.textDecoration = '';
+        document.querySelector('.container__form-add').style.display = 'none';
+        document.querySelector('.container__form-delete').style.display = 'none';
+        document.querySelector('.container__view').style.opacity=0;
+        document.querySelector('.container__view').style.visibility='hidden';
+        if (document.querySelector('.container__form-fix').style.display == 'none' || document.querySelector('.container__form-fix').style.display == '') {
+            document.querySelector('.container__form-fix').style.display = 'block';
+        }
+        else {
+            document.querySelector('.container__form-fix').style.display = 'none';
+            document.querySelector('.fix').style.color = '';
+            document.querySelector('.fix').style.textDecoration = '';
+        }
+    }
+    function handle_click_view_button(){
+        document.querySelector('.view').style.color = 'white';
+        document.querySelector('.view').style.textDecoration = 'underline white solid 1px';
+        document.querySelector('.add').style.color = '';
+        document.querySelector('.add').style.textDecoration = '';
+        document.querySelector('.delete').style.color = '';
+        document.querySelector('.delete').style.textDecoration = '';
+        document.querySelector('.fix').style.color = '';
+        document.querySelector('.fix').style.textDecoration = '';
+        document.querySelector('.container__form-add').style.display = 'none';
+        document.querySelector('.container__form-delete').style.display = 'none';
+        document.querySelector('.container__form-fix').style.display = 'none';
+        if (document.querySelector('.container__view').style.opacity == 0) {
+           document.querySelector('.container__view').style.opacity=1;
+           document.querySelector('.container__view').style.visibility='visible';
+        }
+        else {
+            document.querySelector('.container__view').style.opacity=0;
+            document.querySelector('.container__view').style.visibility='hidden';
+            document.querySelector('.view').style.color = '';
+            document.querySelector('.view').style.textDecoration = '';
+        }
+    }
+    function handle_click_input_proName() {
+        document.querySelector('.error__proName').style.opacity = 0;
+        document.querySelector('.error__proName').style.visibility = 'hidden';
+    }
+    function handle_click_input_proNameFix() {
+        document.querySelector('.error__proName1').style.opacity = 0;
+        document.querySelector('.error__proName1').style.visibility = 'hidden';
+    }
+    function handle_click_input_tinyDes() {
+        document.querySelector('.error__tinyDes').style.opacity = 0;
+        document.querySelector('.error__tinyDes').style.visibility = 'hidden';
+    }
+    function handle_click_input_tinyDesFix() {
+        document.querySelector('.error__tinyDes1').style.opacity = 0;
+        document.querySelector('.error__tinyDes1').style.visibility = 'hidden';
+    }
+    function handle_click_input_price() {
+        document.querySelector('.error__price').style.opacity = 0;
+        document.querySelector('.error__price').style.visibility = 'hidden';
+    }
+     function handle_click_input_priceFix() {
+        document.querySelector('.error__price1').style.opacity = 0;
+        document.querySelector('.error__price1').style.visibility = 'hidden';
+    }
+    function handle_click_input_quantity() {
+        document.querySelector('.error__quantity').style.opacity = 0;
+        document.querySelector('.error__quantity').style.visibility = 'hidden';
+    }
+    function handle_click_input_quantityFix() {
+        document.querySelector('.error__quantity1').style.opacity = 0;
+        document.querySelector('.error__quantity1').style.visibility = 'hidden';
+    }
+    function handle_submit_form_add() {
+        if (document.querySelector('.input__ProName-add-product').value.length > 40) {
+            document.querySelector('.error__proName').style.opacity = 1;
+            document.querySelector('.error__proName').style.visibility = 'visible';
+        }
+        if (document.querySelector('.input__TinyDes-add-product').value.length > 80) {
+            document.querySelector('.error__tinyDes').style.opacity = 1;
+            document.querySelector('.error__tinyDes').style.visibility = 'visible';
+        }
+        if ((isNaN(document.querySelector('.input__Quantity-add-product').value) == true) || (isNaN(document.querySelector('.input__Quantity-add-product').value) == false && Number(document.querySelector('.input__Quantity-add-product').value) < 0 || Number(document.querySelector('.input__Quantity-add-product').value) > 2147483648)) {
+            document.querySelector('.error__quantity').style.opacity = 1;
+            document.querySelector('.error__quantity').style.visibility = 'visible';
+        }
+        if (isNaN(document.querySelector('.input__Price-add-product').value) == true) {
+            document.querySelector('.error__price').style.opacity = 1;
+            document.querySelector('.error__price').style.visibility = 'visible';
+        }
+        else {
+            if (Number(document.querySelector('.input__Price-add-product').value) < 0) {
+                document.querySelector('.error__price').style.opacity = 1;
+                document.querySelector('.error__price').style.visibility = 'visible';
+            }
+            else {
+                var posOfDot = document.querySelector('.input__Price-add-product').value.lastIndexOf('.');
+                if (posOfDot != -1) {
+                    var str1 = document.querySelector('.input__Price-add-product').value.slice(0, posOfDot);
+                    var str2 = document.querySelector('.input__Price-add-product').value.slice(posOfDot + 1);
+                    if (str1.length > 19 || str2.length > 4) {
+                        document.querySelector('.error__price').style.opacity = 1;
+                        document.querySelector('.error__price').style.visibility = 'visible';
+                    }
+                    else {
+                        if (document.querySelector('.error__proName').style.visibility != 'visible' && document.querySelector('.error__tinyDes').style.visibility != 'visible' && document.querySelector('.error__quantity').style.visibility != 'visible' && document.querySelector('.error__price').style.visibility != 'visible') {
+                            document.querySelector('.form__add-product').submit();
+                        }
+                    }
+                }
+                else {
+                    var str1 = document.querySelector('.input__Price-add-product').value.length;
+                    if (str1 > 19) {
+                        document.querySelector('.error__price').style.opacity = 1;
+                        document.querySelector('.error__price').style.visibility = 'visible';
+                    }
+                    else {
+                        if (document.querySelector('.error__proName').style.visibility != 'visible' && document.querySelector('.error__tinyDes').style.visibility != 'visible' && document.querySelector('.error__quantity').style.visibility != 'visible' && document.querySelector('.error__price').style.visibility != 'visible') {
+                            document.querySelector('.form__add-product').submit();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    function handle_submit_form_delete(){
+        if(confirm('Bạn chắc chắn muốn xoá sản phẩm này?')){
+            document.querySelector('.form__delete-product').submit();
+        }
+    }
+    function handle_submit_form_fix(){
+        if (document.querySelector('.selectToFix').value!=""){
+            document.querySelector('.form__fix-product').submit();
+        }
+    }
+    function handle_submit_form_update(){
+        if (document.querySelector('.input__ProName-fix-product').value.length > 40) {
+            document.querySelector('.error__proName1').style.opacity = 1;
+            document.querySelector('.error__proName1').style.visibility = 'visible';
+        }
+        if (document.querySelector('.input__TinyDes-fix-product').value.length > 80) {
+            document.querySelector('.error__tinyDes1').style.opacity = 1;
+            document.querySelector('.error__tinyDes1').style.visibility = 'visible';
+        }
+        if ((isNaN(document.querySelector('.input__Quantity-fix-product').value) == true) || (isNaN(document.querySelector('.input__Quantity-fix-product').value) == false && Number(document.querySelector('.input__Quantity-fix-product').value) < 0 || Number(document.querySelector('.input__Quantity-fix-product').value) > 2147483648)) {
+            document.querySelector('.error__quantity1').style.opacity = 1;
+            document.querySelector('.error__quantity1').style.visibility = 'visible';
+        }
+        if (isNaN(document.querySelector('.input__Price-fix-product').value) == true) {
+            document.querySelector('.error__price1').style.opacity = 1;
+            document.querySelector('.error__price1').style.visibility = 'visible';
+        }
+        else {
+            if (Number(document.querySelector('.input__Price-fix-product').value) < 0) {
+                document.querySelector('.error__price1').style.opacity = 1;
+                document.querySelector('.error__price1').style.visibility = 'visible';
+            }
+            else {
+                var posOfDot = document.querySelector('.input__Price-fix-product').value.lastIndexOf('.');
+                if (posOfDot != -1) {
+                    var str1 = document.querySelector('.input__Price-fix-product').value.slice(0, posOfDot);
+                    var str2 = document.querySelector('.input__Price-fix-product').value.slice(posOfDot + 1);
+                    if (str1.length > 19 || str2.length > 4) {
+                        document.querySelector('.error__price1').style.opacity = 1;
+                        document.querySelector('.error__price1').style.visibility = 'visible';
+                    }
+                    else {
+                        if (document.querySelector('.error__proName1').style.visibility != 'visible' && document.querySelector('.error__tinyDes1').style.visibility != 'visible' && document.querySelector('.error__quantity1').style.visibility != 'visible' && document.querySelector('.error__price1').style.visibility != 'visible') {
+                            document.querySelector('.form__update-product').submit();
+                        }
+                    }
+                }
+                else {
+                    var str1 = document.querySelector('.input__Price-fix-product').value.length;
+                    if (str1 > 19) {
+                        document.querySelector('.error__price1').style.opacity = 1;
+                        document.querySelector('.error__price1').style.visibility = 'visible';
+                    }
+                    else {
+                        if (document.querySelector('.error__proName1').style.visibility != 'visible' && document.querySelector('.error__tinyDes1').style.visibility != 'visible' && document.querySelector('.error__quantity1').style.visibility != 'visible' && document.querySelector('.error__price1').style.visibility != 'visible') {
+                            document.querySelector('.form__update-product').submit();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    function handle_click_view_book(){
+        document.querySelector('.view_type').value='1';
+        document.querySelector('.form__view-product').submit();
+    }
+    function handle_click_view_phone(){
+        document.querySelector('.view_type').value='2';
+        document.querySelector('.form__view-product').submit();
+    }
+    function handle_click_view_camera(){
+        document.querySelector('.view_type').value='3';
+        document.querySelector('.form__view-product').submit();
+    }
+    function handle_click_view_fashion(){
+        document.querySelector('.view_type').value='4';
+        document.querySelector('.form__view-product').submit();
+    }
+    function handle_click_view_computer(){
+        document.querySelector('.view_type').value='5';
+        document.querySelector('.form__view-product').submit();
+    }
+    function handle_click_view_jewelry(){
+        document.querySelector('.view_type').value='6';
+        document.querySelector('.form__view-product').submit();
+    }
+    function handle_click_view_another(){
+        document.querySelector('.view_type').value='7';
+        document.querySelector('.form__view-product').submit();
+    }
+    function handle_click_view_all(){
+        window.location='/';
+    }
+</script>
+
+</html>

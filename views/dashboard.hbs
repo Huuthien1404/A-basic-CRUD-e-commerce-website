@@ -1,0 +1,106 @@
+{{{messages.styleForFormFix}}}
+<div class="grid grid__container-list">
+    <div class="grid wide">
+        <div class="row container__list">
+            {{!-- <div class="col l-3 m-4 c-12">
+                <div class="card__item">
+                    <div class="card__item-img">
+                        <img src="http://localhost:3000/1.jpg" alt="">
+                    </div>
+                    <div class="card__item-content">
+                        <span>Freshwater Cultured Pearl</span>
+                        <span>Số lương: 83</span>
+                        <span>Giá tiền: 1500000đ</span>
+                    </div>
+                </div>
+            </div> --}}
+            {{{list_item}}}
+        </div>
+    </div>
+    <div class="container__form-add">
+        <form action="/" method="post" class="form__add-product" onsubmit="event.preventDefault(); handle_submit_form_add();" enctype="multipart/form-data">
+            <input type="text" class="input__add-product input__ProName-add-product" name="proName" placeholder="Tên sản phẩm" required autocomplete="off" onclick="handle_click_input_proName()">
+            <p class="error__proName">Độ dài tên sản phẩm không được vượt quá 40 ký tự</p>
+            <input type="text" class="input__add-product input__TinyDes-add-product" name="tinyDes" placeholder="Mô tả ngắn gọn" required autocomplete="off" onclick="handle_click_input_tinyDes()">
+            <p class="error__tinyDes">Độ dài của mô tả ngắn gọn không được vượt quá 80 ký tự</p>
+            <input type="text" class="input__add-product input__FullDes-add-product" name="fullDes" placeholder="Mô tả chi tiết" required autocomplete="off">
+            <input type="text" class="input__add-product input__Price-add-product" name="price" placeholder="Giá tiền" required autocomplete="off" onclick="handle_click_input_price()">
+            <p class="error__price">Giá tiền phải là 1 con số lớn hơn 0 và nhỏ hơn 9999999999999999999.9999</p>
+            <select name="catID" id="" class="input__add-product input__CatID-add-product" required autocomplete="off">
+                <option value="1">Sách</option>
+                <option value="2">Điện thoại</option>
+                <option value="3">Máy chụp hình</option>
+                <option value="4">Quần áo - Giày dép</option>
+                <option value="5">Máy tính</option>
+                <option value="6">Đồ trang sức</option>
+                <option value="7">Khác</option>
+            </select>
+            <input type="text" class="input__add-product input__Quantity-add-product" name="quantity" placeholder="Số lượng" required autocomplete="off" onclick="handle_click_input_quantity()">
+            <p class="error__quantity">Số lượng phải là 1 con số không âm và nhỏ hơn 2147483648</p>
+            <input type="file" class="input__add-product input__LinkImg-add-product" name="linkImg" accept="image/*" required autocomplete="off">
+            <input type="submit" value="Thêm sản phẩm" class="input__add-product">
+        </form>
+    </div>
+    <div class="container__form-delete">
+        <form action="/" method="post" class="form__delete-product" onsubmit="event.preventDefault(); handle_submit_form_delete();">
+            <select name="selectToDelete" id="" class="input__add-product selectToDelete">
+                {{{list_item_to_delete}}}
+            </select>
+            <input type="submit" value="Xoá sản phẩm" class="input__add-product">
+        </form>
+    </div>
+    <div class="container__form-fix">
+        <form action="/" method="post" class="form__fix-product">
+            <select name="selectToFix" id="" class="input__add-product selectToFix" onchange="handle_submit_form_fix()">
+                <option value="">Chọn sản phẩm cần cập nhật thông tin</option>
+                {{{list_item_to_fix}}}
+            </select>
+        </form>
+        {{{messages.list_item_to_update}}}
+    </div>
+</div>
+<div class="pagination">
+    <span class="total__page">{{sum_page}}</span>
+    <span class="type__product">{{type_product}}</span>
+    <form action="/" method="post" class="form__get-list-item-page-first">
+    <input type="text" class="list__item-page-first" name="list_item_page_first">
+    </form>
+    <form action="/" method="post" class="form__get-list-item-page-second">
+    <input type="text" class="list__item-page-second" name="list_item_page_second">
+    </form>
+    <form action="/" method="post" class="form__get-list-item-page-third">
+    <input type="text" class="list__item-page-third" name="list_item_page_third">
+    </form>
+    <form action="/" method="post" class="form__get-list-item-page-first_view">
+    <input type="text" class="list__item-page-first-view" name="list_item_page_first_view">
+    <input type="text" class="type_product_view" name="type_product_view">
+    </form>
+    <form action="/" method="post" class="form__get-list-item-page-second_view">
+    <input type="text" class="list__item-page-second-view" name="list_item_page_second_view">
+    <input type="text" class="type_product_view_2" name="type_product_view_2">
+    </form>
+    <form action="/" method="post" class="form__get-list-item-page-third_view">
+    <input type="text" class="list__item-page-third-view" name="list_item_page_third_view">
+    <input type="text" class="type_product_view_3" name="type_product_view_3">
+    </form>
+    {{{messages.notificationFromSever}}}
+    {{!-- <div class="prev__button">
+        Previous
+    </div>
+    <div class="page__button">
+        1
+    </div>
+    <div class="page__button">
+        2
+    </div>
+    <div class="page__button">
+        3
+    </div>
+    <div class="next__button">
+        Next
+    </div> --}}
+    {{{list_page}}}
+</div>
+<form action="/" method="post" class="form__view-product">
+    <input type="text" name="view_type" class="view_type">
+</form>
